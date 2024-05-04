@@ -8,20 +8,16 @@ const CommentSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
-      unique: true,
     },
     blogId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Blog",
       required: true,
-      unique: true,
     },
     comment: {
       type: String,
       trim: true,
       required: true,
-      unique: true,
-      index: true,
     },
   },
   { collection: "comments", timestamps: true }

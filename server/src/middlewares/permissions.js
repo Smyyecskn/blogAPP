@@ -1,6 +1,6 @@
 module.exports = {
   isLogin: (req, res, next) => {
-    return next();
+    // return next();
     if (req.user && req.user.isActive) {
       next();
     } else {
@@ -10,7 +10,7 @@ module.exports = {
   },
 
   isStafforisAdmin: (req, res, next) => {
-    return next();
+    // return next();
     if (
       req.user &&
       req.user.isActive &&
@@ -23,7 +23,7 @@ module.exports = {
     }
   },
   isStaff: (req, res, next) => {
-    return next();
+    // return next();
     if (req.user && req.user.isActive && req.user.isStaff) {
       next();
     } else {
@@ -33,7 +33,7 @@ module.exports = {
   },
 
   isAdmin: (req, res, next) => {
-    return next();
+    // return next();
     if (req.user && req.user.isActive && req.user.isAdmin) {
       next();
     } else {

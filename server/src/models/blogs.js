@@ -8,14 +8,12 @@ const BlogSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
-      unique: true,
       index: true,
     },
     categoryId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Categories",
+      ref: "Category",
       required: true,
-      unique: true,
       index: true,
     },
     title: {
@@ -39,10 +37,12 @@ const BlogSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
-    likes: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      }],
+    likes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
     countOfVisitors: {
       type: Number,
       default: 0,

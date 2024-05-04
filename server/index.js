@@ -7,6 +7,10 @@ app.use(express.json());
 require("dotenv").config();
 const PORT = process.env?.PORT;
 
+//cors
+const cors = require("cors");
+app.use(cors());
+
 require("express-async-errors");
 // Connect to DB:
 const { dbConnection } = require("./src/configs/dbConnection");
