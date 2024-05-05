@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { NavLink } from "react-router-dom";
 
 const Login = () => {
   const [login, setLogin] = useState({
@@ -51,6 +52,12 @@ const Login = () => {
         <button className="bg-purple-500 text-white rounded-md p-3 mt-5">
           SIGN IN
         </button>
+        <p className="text-center text-sm mt-5 text-black px-3 ">
+          Don't have an account?
+          <NavLink className="text-pink-300" to="/register">
+            Register
+          </NavLink>
+        </p>
       </form>
     </div>
   );
