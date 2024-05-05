@@ -1,12 +1,13 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Example from "./components/Navbar";
-import Dashboard from "./components/pages/Dashboard";
-import NewBlogs from "./components/pages/NewBlogs";
-import About from "./components/pages/About";
+import Dashboard from "./pages/Dashboard";
+import NewBlogs from "./pages/NewBlogs";
+import About from "./pages/About";
 import MyBlogs from "./pages/MyBlogs";
 import Profile from "./pages/Profile";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import PrivateRouter from "./routes/PrivateRouter";
 
 export default function App() {
   return (
@@ -18,10 +19,14 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/about" element={<About />} />
-          <Route>
-            <Route path="/newblog" element={<NewBlogs />} />
-            <Route path="/myblogs" element={<MyBlogs />} />
-            <Route path="/profile" element={<Profile />} />
+          <Route path="/newblog" element={<PrivateRouter />}>
+            <Route path="" element={<NewBlogs />} />
+          </Route>
+          <Route path="/myblogs" element={<PrivateRouter />}>
+            <Route path="" element={<MyBlogs />} />
+          </Route>
+          <Route path="/profile" element={<PrivateRouter />}>
+            <Route path="" element={<Profile />} />
           </Route>
         </Routes>
       </BrowserRouter>
