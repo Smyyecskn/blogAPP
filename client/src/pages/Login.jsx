@@ -3,7 +3,7 @@ import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [login, setLogin] = useState({
+  const [login, setLogin] = useState({ //local state
     email: "",
     password: "",
   });
@@ -15,6 +15,11 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    //local statedeki verilere göre global statee veri AKTARIMI mümkün olabilir.
+    //giriş bilgilerinin saklanıp global statee aktarılması
+    //routıng işlemi yapılması
+
+
   };
 
   const URL = import.meta.env.VITE_BASE_URL;

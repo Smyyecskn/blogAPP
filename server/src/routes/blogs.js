@@ -4,10 +4,7 @@ const blogs = require("../controllers/blogs");
 const permissions = require("../middlewares/permissions");
 
 //URL:/blogss
-router
-  .route("/")
-  .get(permissions.isLogin, blogs.list)
-  .post(permissions.isLogin, blogs.create);
+router.route("/").get(blogs.list).post(permissions.isLogin, blogs.create);
 router
   .route("/:id")
   .get(permissions.isLogin, blogs.read)
