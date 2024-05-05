@@ -156,7 +156,7 @@ export default function Example() {
                         {/* {user?.email && ( */}
                         <span
                           // onClick={handleLogout}
-                          className="text-sm px-4 cursor-pointer"
+                          className="text-sm px-4 block py-2 text-gray-700 cursor-pointer"
                         >
                           Logout
                         </span>

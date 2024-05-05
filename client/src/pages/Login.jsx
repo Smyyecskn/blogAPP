@@ -1,5 +1,6 @@
+import axios from "axios";
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [login, setLogin] = useState({
@@ -7,13 +8,20 @@ const Login = () => {
     password: "",
   });
 
+  const Navigate = useNavigate();
   const handleChange = (e) => {
     setLogin({ ...login, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(login);
+  };
+
+  const URL = import.meta.env.VITE_BASE_URL;
+  const loginPost = async (login) => {
+    const data = await axios.post(`${URL}/auth/login`, login);
+    console.log(data);
+    Navigate(-1);
   };
 
   return (

@@ -1,6 +1,14 @@
- 
+import BlogCard from "../components/BlogCard";
+
 const Dashboard = () => {
-  return <div>Dashboard</div>;
+  
+  const URL = import.meta.env.VITE_BASE_URL;
+  const blogData = async()=>{
+   const data = await axios.get(`${URL}/`);
+  }
+  <div>
+    <BlogCard />
+  </div>;
 };
 
 export default Dashboard;
