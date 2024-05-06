@@ -20,7 +20,7 @@ module.exports = {
             `
         */
 
-    const data = await res.getModelList(Blog);
+    const data = await res.getModelList(Blog, {}, ["categoryId", "userId"]);
 
     res.status(200).send({
       error: false,
@@ -64,7 +64,7 @@ module.exports = {
             #swagger.tags = ["Blog"]
             #swagger.summary = "Update Blog"
         */
-   if (!req.user.isAdmin) _id:req.user.id;
+    if (!req.user.isAdmin) _id: req.user.id;
     const data = await Blog.updateOne({ _id: req.params.id }, req.body, {
       runValidators: true,
     });

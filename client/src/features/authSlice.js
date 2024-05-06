@@ -6,7 +6,7 @@ const initialState = {
   user: "",
 };
 
-//!5- Bu kısmı oluşturduk. 1 SLICEda  1 REDUCER OLUR. 
+//!5- Bu kısmı oluşturduk. 1 SLICEda  1 REDUCER OLUR.
 const authSlice = createSlice({
   name: "auth", //action typeın ismi
   initialState, //initial state
@@ -17,8 +17,9 @@ const authSlice = createSlice({
       state.loading = true;
       state.error = false;
     },
-    setUser: (state, action) => { //bilgileri başarılı olunca saklayacak olan fonksiyon
-      state.user = action.payload; //bilgiler action.payloaddan state.user a aktaracak.  
+    setUser: (state, action) => {
+      //bilgileri başarılı olunca saklayacak olan fonksiyon
+      state.user = action.payload; //bilgiler action.payloaddan state.user a aktaracak.
       state.loading = false;
       state.error = false;
     },

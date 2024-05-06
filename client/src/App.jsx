@@ -16,19 +16,16 @@ export default function App() {
       <BrowserRouter>
         <Example />
         <Routes>
-          <Route path="/" element={<Dashboard />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Dashboard />} />
           <Route path="/register" element={<Register />} />
           <Route path="/about" element={<About />} />
           <Route path="/newblog" element={<PrivateRouter />}>
             <Route path="" element={<NewBlogs />} />
           </Route>
-          <Route path="/myblogs" element={<PrivateRouter />}>
-            <Route path="" element={<MyBlogs />} />
-          </Route>
-          <Route path="/profile" element={<PrivateRouter />}>
-            <Route path="" element={<Profile />} />
-          </Route>
+
+          <Route path="/myblogs" element={<MyBlogs />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
         <ToastContainer />
       </BrowserRouter>
