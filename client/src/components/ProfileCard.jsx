@@ -3,9 +3,11 @@ import {
   CardHeader,
   CardBody,
   CardFooter,
-  Typography,
-  Tooltip,
 } from "@material-tailwind/react";
+import { UserCircleIcon } from "@heroicons/react/24/outline";
+import { ChatBubbleBottomCenterIcon } from "@heroicons/react/24/outline";
+import { EyeIcon } from "@heroicons/react/24/outline";
+import { HeartIcon } from "@heroicons/react/24/outline";
 
 export function ProfileCard({ blog }) {
   return (
@@ -21,40 +23,19 @@ export function ProfileCard({ blog }) {
           {blog.title}
         </p>
       </CardBody>
-      <CardFooter className="flex justify-center gap-7 pt-2">
-        <Tooltip content="Like">
-          <Typography
-            as="a"
-            href="#facebook"
-            variant="lead"
-            color="blue"
-            textGradient
-          >
-            <i className="fab fa-facebook" />
-          </Typography>
-        </Tooltip>
-        <Tooltip content="Follow">
-          <Typography
-            as="a"
-            href="#twitter"
-            variant="lead"
-            color="light-blue"
-            textGradient
-          >
-            <i className="fab fa-twitter" />
-          </Typography>
-        </Tooltip>
-        <Tooltip content="Follow">
-          <Typography
-            as="a"
-            href="#instagram"
-            variant="lead"
-            color="purple"
-            textGradient
-          >
-            <i className="fab fa-instagram" />
-          </Typography>
-        </Tooltip>
+      <CardFooter className="pt-2 text-center ">
+        <div className="flex pb-4">
+          <UserCircleIcon className="size-6 text-black" />
+          <p>{blog.userId.username}</p>
+        </div>
+        <div className="flex gap-6 mx-auto">
+          <ChatBubbleBottomCenterIcon className="size-6 text-black" />
+          <EyeIcon className="size-6 text-black" />
+          <HeartIcon className="size-6 text-black" />
+          <button className="bg-cyan-700 hover:bg-cyan-900 text-white font-medium py-2 px-2 rounded-lg mt-5 ml-20">
+            Read More
+          </button>
+        </div>
       </CardFooter>
     </Card>
   );

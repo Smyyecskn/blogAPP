@@ -4,6 +4,8 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { clearUser } from "../features/authSlice";
+import axios from "axios";
+import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -13,9 +15,17 @@ export default function Example() {
   //giriş yapılmışsa user varsa logout ,yapılmamışşsa login yazması ıcın user stateını çek.
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const handleLogout = () => {
-    dispatch(clearUser());
+  const handleLogout = async () => {
+    try {
+      await axios.get(`${URL}/auth/logout`);
+      dispatch(clearUser());
+      navigate("/login");
+      toastSuccessNotify("Logout successfully");
+    } catch (error) {
+      toastErrorNotify("Something went wrong");
+    }
   };
 
   return (
@@ -81,16 +91,19 @@ export default function Example() {
               </div>
 
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <NavLink
-                  to="/login"
-                  style={({ isActive }) => {
-                    return {
-                      color: isActive ? "purple" : "black",
-                    };
-                  }}
-                >
-                  LOGIN
-                </NavLink>
+                {!user?.email && (
+                  <NavLink
+                    to="/login"
+                    style={({ isActive }) => {
+                      return {
+                        color: isActive ? "purple" : "black",
+                      };
+                    }}
+                  >
+                    LOGIN
+                  </NavLink>
+                )}
+
                 <Menu as="div" className="relative ml-3">
                   <div>
                     <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
@@ -113,22 +126,6 @@ export default function Example() {
                     leaveTo="transform opacity-0 scale-95"
                   >
                     <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white shadow-lg ring-1 gap-4 ring-black ring-opacity-5 focus:outline-none">
-                      {user?.email && (
-                        <Menu.Item>
-                          {({ active }) => (
-                            <NavLink
-                              to="/login"
-                              className={classNames(
-                                active ? "bg-gray-100" : "",
-                                "block px-4 py-2 text-sm text-gray-700"
-                              )}
-                            >
-                              Login
-                            </NavLink>
-                          )}
-                        </Menu.Item>
-                      )}
-
                       <Menu.Item>
                         {({ active }) => (
                           <NavLink
@@ -155,15 +152,16 @@ export default function Example() {
                           </NavLink>
                         )}
                       </Menu.Item>
-
-                      <Menu.Item>
-                        <span
-                          onClick={handleLogout}
-                          className="text-sm px-4 block py-2 text-gray-700 cursor-pointer"
-                        >
-                          Logout
-                        </span>
-                      </Menu.Item>
+                      {user?.email && (
+                        <Menu.Item>
+                          <span
+                            onClick={handleLogout}
+                            className="text-sm px-4 block py-2 text-gray-700 cursor-pointer"
+                          >
+                            Logout
+                          </span>
+                        </Menu.Item>
+                      )}
                     </Menu.Items>
                   </Transition>
                 </Menu>

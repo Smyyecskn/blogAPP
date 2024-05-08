@@ -20,7 +20,8 @@ const Login = () => {
 
   const URL = import.meta.env.VITE_BASE_URL;
 
-  const userPost = async (login) => { //giriş işlemini yapmak için backende post isteği attık.
+  const postUser = async (login) => {
+    //giriş işlemini yapmak için backende post isteği attık.
     try {
       const data = await axios.post(`${URL}/auth/login`, login);
       // console.log(data); //user bilgim dogru mu baktık.
@@ -37,7 +38,7 @@ const Login = () => {
     //local statedeki verilere göre global statee veri AKTARIMI mümkün olabilir.
     //giriş bilgilerinin saklanıp global statee aktarılması gerek.
     //routıng işlemi yapılması gerek.
-    userPost(login);
+    postUser(login);
   };
 
   return (

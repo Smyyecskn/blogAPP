@@ -1,4 +1,9 @@
+import axios from "axios";
 import { useState } from "react";
+import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { registerSuccess } from "../features/authSlice";
 
 const Register = () => {
   const [login, setLogin] = useState({
@@ -8,14 +13,30 @@ const Register = () => {
     content: "",
     image: "",
   });
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setLogin({ ...login, [e.target.name]: e.target.value });
   };
 
+  const URL = import.meta.env.VITE_BASE_URL;
+  //register olma koşulları sağlanarak anasayfaya yönlendirildi
+  const postRegister = async (postUser) => {
+    try {
+      const data = await axios.post(`${URL}/user`, postUser);
+      console.log("data", data);
+      toastSuccessNotify("User created successfully");
+      dispatch(registerSuccess(data));
+      navigate("/");
+    } catch (error) {
+      toastErrorNotify("Something went wrong");
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(login);
+    postRegister(login);
   };
   return (
     <div>

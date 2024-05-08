@@ -4,6 +4,7 @@ const initialState = {
   loading: false,
   error: false,
   user: "",
+  register: "",
 };
 
 //!5- Bu kısmı oluşturduk. 1 SLICEda  1 REDUCER OLUR.
@@ -28,6 +29,11 @@ const authSlice = createSlice({
       state.loading = false;
       state.error = false;
     },
+    registerSuccess(state, action) {
+      state.register = action.payload;
+      state.loading = false;
+      state.error = false;
+    },
     fetchFail: (state) => {
       state.loading = false;
       state.error = true;
@@ -35,7 +41,8 @@ const authSlice = createSlice({
   },
 });
 
-export const { fetchStart, setUser, clearUser, fetchFail } = authSlice.actions; //createSlice ile create ettik authSlicesı, authSlice icerisindeki actionlari export ediyoruz.
+export const { fetchStart, setUser, clearUser, fetchFail, registerSuccess } =
+  authSlice.actions; //createSlice ile create ettik authSlicesı, authSlice icerisindeki actionlari export ediyoruz.
 export default authSlice.reducer;
 
 //!-6 38dekini artık export default olanı store.jsxe ımport edıyoz.
