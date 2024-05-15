@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   blogs: [],
+  blogdetail: {},
+  newBlog: [],
   loading: false,
   error: false,
 };
@@ -19,6 +21,16 @@ const blogSlice = createSlice({
       state.loading = false;
       state.error = false;
     },
+    blogNewSuccess: (state, action) => {
+      state.newBlog = action.payload;
+      state.loading = false;
+      state.error = false;
+    },
+    blogDetailSuccess: (state, action) => {
+      state.blogdetail = action.payload;
+      state.loading = false;
+      state.error = false;
+    },
     blogFail: (state) => {
       state.loading = false;
       state.error = true;
@@ -26,6 +38,12 @@ const blogSlice = createSlice({
   },
 });
 
-export const { blogStart, blogSuccess, blogFail } = blogSlice.actions;
+export const {
+  blogStart,
+  blogSuccess,
+  blogFail,
+  blogDetailSuccess,
+  blogNewSuccess,
+} = blogSlice.actions;
 
 export default blogSlice.reducer;

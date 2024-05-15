@@ -15,7 +15,7 @@ const Dashboard = () => {
   const dispatch = useDispatch();
   const URL = import.meta.env.VITE_BASE_URL;
   const blogs = useSelector((state) => state.blog.blogs);
-  console.log("blogs", blogs); //! başlangıc değerinden dolayı [] ama artık data.data.data bizim blogs stateımıze gomuldu. 25de
+  // console.log("blogs", blogs); //! başlangıc değerinden dolayı [] ama artık data.data.data bizim blogs stateımıze gomuldu. 25de
 
   const getBlogs = async () => {
     try {
