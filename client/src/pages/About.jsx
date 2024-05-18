@@ -1,11 +1,14 @@
 import { Card } from "@material-tailwind/react";
+import { useSelector } from "react-redux";
 
 const About = () => {
+  const { user } = useSelector((state) => state.auth);
+
   return (
     <div>
       <Card className="w-[70%] text-center mx-auto p-20 gap-8">
         <h2 className="font-bold bg-purple-600 mx-auto text-white p-2 w-[60%] lg:w-[20%] rounded-lg">
-          Smyye COSKUN
+          {user?.username && user?.firstname}
         </h2>
         <p>
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. At quos

@@ -1,36 +1,18 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { NavLink, useNavigate } from "react-router-dom";
-import { setUser } from "../features/authSlice";
-import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
-import axios from "axios";
-
+import { NavLink } from "react-router-dom";
+import useAuthCalls from "../services/useAuthCalls";
+ 
 const Login = () => {
+
+  const { postUser } = useAuthCalls();
   const [login, setLogin] = useState({
     //local state
     email: "",
     password: "",
   });
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   const handleChange = (e) => {
     setLogin({ ...login, [e.target.name]: e.target.value });
-  };
-
-  const URL = import.meta.env.VITE_BASE_URL;
-
-  const postUser = async (login) => {
-    //giriş işlemini yapmak için backende post isteği attık.
-    try {
-      const data = await axios.post(`${URL}/auth/login`, login);
-      // console.log(data); //user bilgim dogru mu baktık.
-      toastSuccessNotify("User loginned Successfully");
-      dispatch(setUser(data.data.user));
-      navigate("/");
-    } catch (error) {
-      toastErrorNotify("Something went wrong");
-    }
   };
 
   const handleSubmit = (e) => {

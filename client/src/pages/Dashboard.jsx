@@ -1,36 +1,25 @@
+
+import {  useSelector } from "react-redux";
+import { useEffect, } from "react";
+import { ProfileCard } from "../components/ProfileCard";
+import useBlogCalls from "../services/useBlogCalls";
+
 //!REACT-REDUX-TOOLKİT
 //1-app klasoru içinde Store oluşturma.
 //2-sarmalama(app.js dosyası içinde storeu provider ile uygulamaya sarmalama)
 //3-gerektiği yerde storeu useSellectorle çekme ve okuma
 //4-UI tarafında state değiştirmek için de dispatch yayınlayıp bunu reducera iletme
 
-import { useDispatch, useSelector } from "react-redux";
-import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
-import { useEffect } from "react";
-import axios from "axios";
-import { blogSuccess } from "../features/blogSlice";
-import { ProfileCard } from "../components/ProfileCard";
 
 const Dashboard = () => {
-  const dispatch = useDispatch();
-  const URL = import.meta.env.VITE_BASE_URL;
-  const blogs = useSelector((state) => state.blog.blogs);
+   const blogs = useSelector((state) => state.blog.blogs);
   // console.log("blogs", blogs); //! başlangıc değerinden dolayı [] ama artık data.data.data bizim blogs stateımıze gomuldu. 25de
+  const {getBlogs} = useBlogCalls()
 
-  const getBlogs = async () => {
-    try {
-      const data = await axios.get(`${URL}/blogs`);
-      // console.log(data.data.data);
-      toastSuccessNotify("Blogs getted");
-      dispatch(blogSuccess(data.data.data)); ///artık bu blogs statıne aktarıldı 16dakı.
-    } catch (error) {
-      toastErrorNotify("Something went wrong");
-    }
-  };
-
-  useEffect(() => {
-    getBlogs();
-  }, []);
+ useEffect(() => {
+      getBlogs();
+ }, [])
+ 
 
   return (
     <div className="px-10 text-justify bg-gray-300 h-full pb-5">

@@ -6,10 +6,28 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "../features/authSlice";
 import blogReducer from "../features/blogSlice";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage/session"; // session storage
 
-export const store = configureStore({ //!STORE OLUŞTURDUK.
+const persistConfig = {
+  key: "auth",
+  storage,
+};
+const persistedReducer = persistReducer(persistConfig, authReducer);
+
+export const store = configureStore({
+  //!STORE OLUŞTURDUK.
   reducer: {
-    auth: authReducer, //1 store ıcınde bırden fazla reducer olabilir.
+    auth: persistedReducer, //1 store ıcınde bırden fazla reducer olabilir.
     blog: blogReducer,
   },
+
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
+
+export const persistor = persistStore(store);
+
+export default store;

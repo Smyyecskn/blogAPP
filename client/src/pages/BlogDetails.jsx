@@ -1,28 +1,15 @@
-import axios from "axios";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { Card, CardBody, CardHeader } from "@material-tailwind/react";
-import { blogDetailSuccess } from "../features/blogSlice";
-import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
+import useBlogCalls from "../services/useBlogCalls";
 
 const BlogDetails = () => {
-  const URL = import.meta.env.VITE_BASE_URL;
+  const navigate = useNavigate();
   const { blogdetail } = useSelector((state) => state.blog);
   //   console.log(blogdetail);
   const { id } = useParams();
-  const dispatch = useDispatch();
-
-  const blogDetails = async (id) => {
-    try {
-      const data = await axios.get(`${URL}/blogs/${id}`);
-      //   console.log(data.data.data);
-      dispatch(blogDetailSuccess(data.data.data));
-      toastSuccessNotify("Blog getted");
-    } catch (error) {
-      toastErrorNotify("Something went wrong");
-    }
-  };
+  const { blogDetails } = useBlogCalls();
 
   useEffect(() => {
     blogDetails(id);
@@ -46,6 +33,12 @@ const BlogDetails = () => {
           <p color="blue-gray" className="font-medium ">
             {blogdetail?.title}
           </p>
+          <button
+            onClick={() => navigate(-1)}
+            className="bg-cyan-700 hover:bg-cyan-900 text-white font-medium py-2 px-2 rounded-lg mt-5"
+          >
+            Anasayfa
+          </button>
         </CardBody>
       </Card>
     </div>

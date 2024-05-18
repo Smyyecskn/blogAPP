@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import PrivateRouter from "./routes/PrivateRouter";
 import { ToastContainer } from "react-toastify";
 import BlogDetails from "./pages/BlogDetails";
+ 
 
 export default function App() {
   return (
@@ -18,12 +19,12 @@ export default function App() {
         <Example />
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          <Route path="/blogdetails/:id" element={<PrivateRouter />}>
-            <Route path="" element={<BlogDetails />} />
-          </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/about" element={<About />} />
+          <Route path="/blogdetails/:id" element={<PrivateRouter />}>
+            <Route path="" element={<BlogDetails />} />
+          </Route>
           <Route path="/newblog" element={<PrivateRouter />}>
             <Route path="" element={<NewBlog />} />
           </Route>

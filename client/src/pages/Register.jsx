@@ -1,11 +1,14 @@
-import axios from "axios";
 import { useState } from "react";
-import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { registerSuccess } from "../features/authSlice";
+import useAuthCalls from "../services/useAuthCalls";
+// import { useSelector } from "react-redux";
 
 const Register = () => {
+  const { postRegister } = useAuthCalls();
+  // const {user} = useSelector((state) => state.auth); //!register bilgilerinizi almak için kullanıyoruz.
+  // console.log('user', user)
+
+  // console.log("token", token);
+
   const [login, setLogin] = useState({
     username: "",
     email: "",
@@ -13,25 +16,9 @@ const Register = () => {
     content: "",
     image: "",
   });
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setLogin({ ...login, [e.target.name]: e.target.value });
-  };
-
-  const URL = import.meta.env.VITE_BASE_URL;
-  //register olma koşulları sağlanarak anasayfaya yönlendirildi
-  const postRegister = async (postUser) => {
-    try {
-      const data = await axios.post(`${URL}/user`, postUser);
-      console.log("data", data);
-      toastSuccessNotify("User created successfully");
-      dispatch(registerSuccess(data));
-      navigate("/");
-    } catch (error) {
-      toastErrorNotify("Something went wrong");
-    }
   };
 
   const handleSubmit = (e) => {
@@ -107,7 +94,6 @@ const Register = () => {
           placeholder="Please enter image"
           onChange={handleChange}
           value={login.image}
-          required
         />
         <button className="bg-purple-500 text-white rounded-md p-3 mt-5">
           SIGN UP

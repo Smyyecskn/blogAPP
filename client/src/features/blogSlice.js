@@ -3,9 +3,10 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   blogs: [],
   blogdetail: {},
-  newBlog: [],
+  // newBlog: {},
   loading: false,
   error: false,
+  token: "",
 };
 
 const blogSlice = createSlice({
@@ -18,16 +19,17 @@ const blogSlice = createSlice({
     },
     blogSuccess: (state, action) => {
       state.blogs = action.payload;
+      state.token = action.payload.token;
       state.loading = false;
       state.error = false;
     },
-    blogNewSuccess: (state, action) => {
-      state.newBlog = action.payload;
-      state.loading = false;
-      state.error = false;
-    },
+    // blogNewSuccess: (state, action) => {
+    //   state.newBlog = action.payload.data;
+    //   state.token = action.payload.token;
+    // },
     blogDetailSuccess: (state, action) => {
       state.blogdetail = action.payload;
+      state.token = action.payload.token;
       state.loading = false;
       state.error = false;
     },

@@ -1,46 +1,29 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
-import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
-import { blogNewSuccess } from "../features/blogSlice";
+import { useSelector } from "react-redux";
+import useBlogCalls from "../services/useBlogCalls";
 
 //! BURDA KALDIM POST OLUŞTURMA
 
-
 const NewBlog = () => {
   const { blogs } = useSelector((state) => state.blog);
-  console.log(blogs);
+  // console.log(blogs);
+  const { postNewBlog } = useBlogCalls();
 
   const [newBlog, setNewBlog] = useState({
     title: "",
     image: "",
     category: "",
-    status: "",
     content: "",
   });
 
-  const dispatch = useDispatch();
-
-  const URL = import.meta.env.VITE_BASE_URL;
-
-  const postNewBlog = async (newBlog) => {
-    try {
-      const data = await axios.post(`${URL}/blogs`, newBlog);
-      dispatch(blogNewSuccess(data.data.data));
-      toastSuccessNotify("Blog created successfully");
-    } catch (error) {
-      toastErrorNotify("Something went wrong");
-    }
-  };
-
-    const getBlogCategories = async () => {
-      try {
-        const { data } = await axios.get(`${URL}/blog/categories`);
-        dispatch(categoriesSuccess(data.data));
-      } catch (error) {
-        toastErrorNotify("Something went wrong");
-      }
-    };
+  // const getBlogCategories = async () => {
+  //   try {
+  //     const { data } = await axios.get(`${URL}/blog/categories`);
+  //     dispatch(categoriesSuccess(data.data));
+  //   } catch (error) {
+  //     toastErrorNotify("Something went wrong");
+  //   }
+  // };
 
   const handleChange = (e) => {
     setNewBlog({ ...newBlog, [e.target.name]: e.target.value });
@@ -92,22 +75,11 @@ const NewBlog = () => {
         >
           {blogs?.map((blog) => (
             <option key={blog?._id} value={blog?._id}>
-              {blog?.categoryId.name}
+              {blog?.categoryId?.name}
             </option>
           ))}
         </select>
-        <label value="status">Status</label>
 
-        <select
-          className="border-x-2 shadow-lg p-3 rounded-lg"
-          name="publish"
-          id="publish"
-          value={newBlog.status}
-          onChange={handleChange}
-        >
-          <option value="">Published</option>
-          <option value="">Draft</option>
-        </select>
         <label>Content</label>
 
         <textarea
