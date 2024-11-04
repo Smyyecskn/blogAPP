@@ -15,18 +15,16 @@ export function ProfileCard({ blog }) {
   const navigate = useNavigate();
   return (
     <Card className="w-96">
+      <CardBody className="text-center">
+        <p className="mb-2 font-bold">{blog?.title}</p>
+        <p color="blue-gray " className="font-medium line-clamp-2">
+          {blog?.content}
+        </p>
+      </CardBody>
       <CardHeader floated={false} className="h-80">
         <img src={blog?.image} alt="picture" className="w-full h-full" />
       </CardHeader>
-      <CardBody className="text-center">
-        <p className="mb-2 line-clamp-2" color="blue-gray">
-          {blog?.content}
-        </p>
-        <p color="blue-gray" className="font-medium ">
-          {blog?.title}
-        </p>
-      </CardBody>
-      <CardFooter className="pt-2 text-center ">
+      <CardFooter className="pt-2 text-center">
         <div className="flex pb-4">
           <UserCircleIcon className="size-6 text-black" />
           <p>{blog?.userId.username}</p>

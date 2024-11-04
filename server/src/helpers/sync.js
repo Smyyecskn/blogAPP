@@ -7,7 +7,7 @@
 module.exports = async function () {
   // return null;
 
-  /* REMOVE DATABASE *
+  /* REMOVE DATABASE */
   const { mongoose } = require("../configs/dbConnection");
   await mongoose.connection.dropDatabase();
   console.log("- Database and all data DELETED!");
@@ -50,15 +50,10 @@ module.exports = async function () {
     isAdmin: false,
   });
 
-  /* Brand *
-  const Brand = require("../models/brand");
-  await Brand.deleteMany(); // !!! Clear collection.
-  await Brand.create({
-    _id: "65343222b67e9681f937f104",
-    name: "Adidas",
-    image:
-      "https://1000logos.net/wp-content/uploads/2019/06/Adidas-Logo-1991.jpg",
-  });
+  /* Blog *
+  const Blogs = require("../models/blogs");
+  await Blogs.deleteMany(); // !!! Clear collection.
+  await Blogs.create();
   await Brand.create({
     _id: "65343222b67e9681f937f105",
     name: "Nike",
