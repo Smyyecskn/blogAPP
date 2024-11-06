@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   blogs: [],
   blogdetail: {},
-  // newBlog: {},
+  categories: [],
+  newsBlog: [],
   loading: false,
   error: false,
   token: "",
@@ -23,10 +24,15 @@ const blogSlice = createSlice({
       state.loading = false;
       state.error = false;
     },
-    // blogNewSuccess: (state, action) => {
-    //   state.newBlog = action.payload.data;
-    //   state.token = action.payload.token;
-    // },
+    blogNewSuccess: (state, action) => {
+      state.newsBlog = action.payload;
+      state.loading = false;
+      state.error = false;
+    },
+    categoriesSuccess: (state, action) => {
+      state.categories = action.payload.data;
+    },
+
     blogDetailSuccess: (state, action) => {
       state.blogdetail = action.payload;
       state.token = action.payload.token;
@@ -46,6 +52,7 @@ export const {
   blogFail,
   blogDetailSuccess,
   blogNewSuccess,
+  categoriesSuccess,
 } = blogSlice.actions;
 
 export default blogSlice.reducer;

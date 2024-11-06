@@ -2,7 +2,9 @@ import {
   blogDetailSuccess,
   blogNewSuccess,
   blogSuccess,
+  categoriesSuccess,
 } from "../features/blogSlice";
+
 import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
 import { useDispatch } from "react-redux";
 import useAxios from "./useAxios";
@@ -15,7 +17,7 @@ const useBlogCalls = () => {
 
   const getBlogs = async () => {
     try {
-      const data = await axiosWithToken.get(`/blogs`);
+      const data = await axiosWithToken(`/blogs`);
       // console.log(data.data.data);
       toastSuccessNotify("Blogs getted");
       dispatch(blogSuccess(data.data.data)); ///artık bu blogs statıne aktarıldı 16dakı.
@@ -34,20 +36,59 @@ const useBlogCalls = () => {
       toastErrorNotify("Something went wrong");
     }
   };
-  const postNewBlog = async (news) => {
+  const postNewBlog = async (newBlogs) => {
     try {
-      const data = await axiosPublic.post(`/blogs`, news);
-      console.log(data);
-      // dispatch(blogNewSuccess(data.data.data));
+      const { data } = await axiosPublic.post(`/blogs`, newBlogs);
+      dispatch(blogNewSuccess(data));
       toastSuccessNotify("Blog created successfully");
-      getBlogs();
       navigate("/");
+      getBlogs();
     } catch (error) {
       toastErrorNotify("Something went wrong");
+      console.log("Error:", error.response?.data || error.message);
     }
   };
 
-  return { getBlogs, blogDetails, postNewBlog };
+  const getCategories = async () => {
+    try {
+      const { data } = await axiosPublic(`/categories`);
+      // console.log(data.data);
+      dispatch(categoriesSuccess(data));
+    } catch (error) {
+      console.log("Error:", error.response?.data || error.message);
+    }
+  };
+
+  const deleteBlog = async (_id) => {
+    try {
+      await axiosWithToken.delete(`/blogs/${_id}`);
+      toastSuccessNotify("Blog deleted successfully");
+      getBlogs();
+    } catch (error) {
+      toastErrorNotify("Something went wrong");
+      console.log(error);
+    }
+  };
+
+  const updateBlog = async (id, updatedBlog) => {
+    try {
+      await axiosWithToken.put(`/blogs/${id}`, updatedBlog);
+      toastSuccessNotify("Blog updated successfully");
+      getBlogs();
+    } catch (error) {
+      toastErrorNotify("Something went wrong");
+      console.log(error.message);
+    }
+  };
+
+  return {
+    getBlogs,
+    blogDetails,
+    postNewBlog,
+    getCategories,
+    deleteBlog,
+    updateBlog,
+  };
 };
 
 export default useBlogCalls;

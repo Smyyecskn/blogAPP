@@ -2,28 +2,18 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import useBlogCalls from "../services/useBlogCalls";
 
-//! BURDA KALDIM POST OLUŞTURMA
-
 const NewBlog = () => {
-  const { blogs } = useSelector((state) => state.blog);
-  // console.log(blogs);
-  const { postNewBlog } = useBlogCalls();
+  const { categories } = useSelector((state) => state.blog);
+  const { user } = useSelector((state) => state.auth);
+  const userId = user._id;
 
+  const { postNewBlog, getCategories } = useBlogCalls();
   const [newBlog, setNewBlog] = useState({
     title: "",
     image: "",
-    category: "",
+    categoryId: "",
     content: "",
   });
-
-  // const getBlogCategories = async () => {
-  //   try {
-  //     const { data } = await axios.get(`${URL}/blog/categories`);
-  //     dispatch(categoriesSuccess(data.data));
-  //   } catch (error) {
-  //     toastErrorNotify("Something went wrong");
-  //   }
-  // };
 
   const handleChange = (e) => {
     setNewBlog({ ...newBlog, [e.target.name]: e.target.value });
@@ -31,10 +21,15 @@ const NewBlog = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    postNewBlog(newBlog);
+    const newBlogs = { ...newBlog, userId };
+    console.log("newBlogs", newBlogs);
+    postNewBlog(newBlogs);
   };
 
-  console.log(newBlog);
+  useEffect(() => {
+    getCategories();
+  }, []);
+
   return (
     <div>
       <form
@@ -51,7 +46,7 @@ const NewBlog = () => {
           id="title"
           name="title"
           placeholder="*Title"
-          value={newBlog.title}
+          value={newBlog?.title}
           onChange={handleChange}
         />
         <label htmlFor="image">Image URL</label>
@@ -61,21 +56,21 @@ const NewBlog = () => {
           id="image"
           name="image"
           placeholder="*Image URL"
-          value={newBlog.image}
+          value={newBlog?.image}
           onChange={handleChange}
         />
 
         <label value="category">Category</label>
         <select
           className="border-x-2 shadow-lg p-3 rounded-lg"
-          name="category"
-          id="category"
-          value={newBlog.category}
+          name="categoryId"
+          id="categoryId"
+          value={newBlog?.categoryId}
           onChange={handleChange}
         >
-          {blogs?.map((blog) => (
-            <option key={blog?._id} value={blog?._id}>
-              {blog?.categoryId?.name}
+          {categories?.map((category) => (
+            <option key={category?._id} value={category?._id}>
+              {category?.name}
             </option>
           ))}
         </select>
@@ -87,7 +82,7 @@ const NewBlog = () => {
           name="content"
           id="content"
           placeholder="*Content"
-          value={newBlog.content}
+          value={newBlog?.content}
           onChange={handleChange}
         ></textarea>
         <button className="bg-cyan-700 hover:bg-cyan-900 text-white font-medium py-2 px-2 rounded-lg mt-5">

@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import useAuthCalls from "../services/useAuthCalls";
- 
-const Login = () => {
 
+const Login = () => {
   const { postUser } = useAuthCalls();
   const [login, setLogin] = useState({
     //local state
@@ -59,12 +58,12 @@ const Login = () => {
         <button className="bg-purple-500 text-white rounded-md p-3 mt-5">
           SIGN IN
         </button>
-        <p className="text-center text-sm mt-5 text-black px-3 ">
-          Don't have an account?
+        <div className="flex items-center justify-between m-4">
+          <p className="text-black ">Don't have an account?</p>
           <NavLink className="text-pink-300" to="/register">
             Register
           </NavLink>
-        </p>
+        </div>
       </form>
     </div>
   );

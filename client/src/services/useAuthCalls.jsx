@@ -27,7 +27,7 @@ const useAuthCalls = () => {
   const postRegister = async (postUser) => {
     try {
       const { data } = await axiosWithToken.post(`/user`, postUser);
-      console.log("data", data);
+      // console.log("data", data);
       toastSuccessNotify("User created successfully");
       dispatch(registerSuccess(data.data));
       navigate("/");
